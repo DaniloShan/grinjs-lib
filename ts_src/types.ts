@@ -1,6 +1,6 @@
 const crypto = require('crypto');
 import { ChainTypes } from './global';
-import { fromEntropy } from './mnemonic';
+import { fromEntropy, toEntropy } from './mnemonic';
 
 export interface WalletConfig {
     chainType: ChainTypes | null,
@@ -37,7 +37,7 @@ export const defaultConfig: WalletConfig = {
 };
 
 export interface WalletSeedInterface {
-    init(recoveryPhrase: string | null, password: string): EncryptedWalletSeedInterface;
+    init(password: string, recoveryPhrase: string[] | null): EncryptedWalletSeedInterface;
 }
 
 export class WalletSeed implements WalletSeedInterface {
@@ -46,15 +46,14 @@ export class WalletSeed implements WalletSeedInterface {
         this.seed = crypto.randomBytes(seedLength);
     }
 
-    init(password: string, recoveryPhrase: string | null): EncryptedWalletSeedInterface {
-        this.seed = recoveryPhrase ? this.fromMnemonic(recoveryPhrase) : this.seed;
+    init(password: string, recoveryPhrase: string[] | null): EncryptedWalletSeedInterface {
+        this.seed = recoveryPhrase && recoveryPhrase.length ? this.fromMnemonic(recoveryPhrase) : this.seed;
         return EncryptedWalletSeed.from_seed(this.seed, password);
     }
 
-    fromMnemonic(recoveryPhrase: string): Buffer {
-        // todo: real code
-        console.log(recoveryPhrase);
-        return crypto.randomBytes(12)
+    fromMnemonic(recoveryPhrase: string[]): Buffer {
+        this.seed = toEntropy(recoveryPhrase);
+        return this.seed;
     }
 
     toMnemonic(): string[] {

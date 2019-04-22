@@ -10,7 +10,7 @@ export declare class Wallet implements WalletInterface {
     walletConfig: WalletConfig | {};
     encSeed: EncryptedWalletSeedInterface;
     constructor(walletConfig?: WalletConfig, isTestnet?: boolean);
-    init(password: string, seedLength: number | undefined, recoveryPharse: string | null): {
+    init(password: string, recoveryPharse: string[] | null, seedLength?: number): {
         encSeed: EncryptedWalletSeedInterface;
         mnemonic: string[];
     };

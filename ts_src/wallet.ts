@@ -17,7 +17,7 @@ export class Wallet implements WalletInterface {
         this.walletConfig = walletConfig;
     }
 
-    init(password: string, seedLength: number = 32, recoveryPharse: string | null)
+    init(password: string, recoveryPharse: string[] | null, seedLength: number = 32)
         : {
         encSeed: EncryptedWalletSeedInterface,
         mnemonic: string[]

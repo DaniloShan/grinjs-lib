@@ -18,13 +18,13 @@ export interface WalletConfig {
 }
 export declare const defaultConfig: WalletConfig;
 export interface WalletSeedInterface {
-    init(recoveryPhrase: string | null, password: string): EncryptedWalletSeedInterface;
+    init(password: string, recoveryPhrase: string[] | null): EncryptedWalletSeedInterface;
 }
 export declare class WalletSeed implements WalletSeedInterface {
     private seed;
     constructor(seedLength: number);
-    init(password: string, recoveryPhrase: string | null): EncryptedWalletSeedInterface;
-    fromMnemonic(recoveryPhrase: string): Buffer;
+    init(password: string, recoveryPhrase: string[] | null): EncryptedWalletSeedInterface;
+    fromMnemonic(recoveryPhrase: string[]): Buffer;
     toMnemonic(): string[];
 }
 export interface EncryptedWalletSeedInterface {

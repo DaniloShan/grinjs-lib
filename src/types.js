@@ -24,13 +24,12 @@ class WalletSeed {
         this.seed = crypto.randomBytes(seedLength);
     }
     init(password, recoveryPhrase) {
-        this.seed = recoveryPhrase ? this.fromMnemonic(recoveryPhrase) : this.seed;
+        this.seed = recoveryPhrase && recoveryPhrase.length ? this.fromMnemonic(recoveryPhrase) : this.seed;
         return EncryptedWalletSeed.from_seed(this.seed, password);
     }
     fromMnemonic(recoveryPhrase) {
-        // todo: real code
-        console.log(recoveryPhrase);
-        return crypto.randomBytes(12);
+        this.seed = mnemonic_1.toEntropy(recoveryPhrase);
+        return this.seed;
     }
     toMnemonic() {
         return mnemonic_1.fromEntropy([...this.seed]);

@@ -8,7 +8,7 @@ class Wallet {
         this.network = isTestnet ? networks_1.floonet : networks_1.mainnet;
         this.walletConfig = walletConfig;
     }
-    init(password, seedLength = 32, recoveryPharse) {
+    init(password, recoveryPharse, seedLength = 32) {
         const newWallet = new types_1.WalletSeed(seedLength);
         this.encSeed = newWallet.init(password, recoveryPharse);
         return { encSeed: this.encSeed, mnemonic: newWallet.toMnemonic() };
