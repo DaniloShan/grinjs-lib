@@ -21,5 +21,10 @@
   "bugs": {
     "url": "https://github.com/DaniloShan/grinjs-lib/issues"
   },
-  "homepage": "https://github.com/DaniloShan/grinjs-lib#readme"
+  "homepage": "https://github.com/DaniloShan/grinjs-lib#readme",
+  "dependencies": {
+    "@types/node": "^11.13.4",
+    "node-forge": "^0.8.2",
+    "randombytes": "^2.1.0"
+  }
 }
