@@ -61,7 +61,6 @@ export function toEntropy(mnemonic: string[]): Buffer {
     let loc = 11 - checksumBits;
     // cast vector of u11 as u8
     for (let index of indexes.reverse()) {
-        console.log('index in for loop: ', index);
         for (let i = 0; i < 11; i++){
             const bit = (index & (1 << i)) !== 0;
             const ei = datalen - Math.floor(loc / 8);

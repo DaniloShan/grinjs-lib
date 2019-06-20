@@ -1,0 +1,67 @@
+{
+    "slate": {
+        "num_participants": 2,
+        "id": {
+            "bytes": [
+                252,
+                139,
+                15,
+                227,
+                153,
+                122,
+                76,
+                160,
+                169,
+                224,
+                128,
+                219,
+                244,
+                93,
+                109,
+                63
+            ]
+        },
+        "tx": {
+            "offset": "d1eb8ff0a4a8123f727e54e6c928404ccc9c5828fd22dc5658588079f5fc117c",
+            "body": {
+                "inputs": [
+                    {
+                        "features": "Plain",
+                        "commit": "09934cde01afc6a27e84217c33b3c4ea6c1a93527d55ca2bb4e77c6fcf6576ca29"
+                    }
+                ],
+                "outputs": [
+                    {
+                        "features": "Plain",
+                        "commit": "08bcc0c0bce26bcca448f4d3a5e6f43a28652c59649b3c2bdd3e76e542b2d1615e",
+                        "proof": "e5a080bb74b17062fcd2e970cba653055e2656bd50d8b47bff874d585bde0c5c46468b22fbb912300e107d4537f679e4add732b072c3a7694e264e209789ed5d0d328149347d1d2a39d9891d323b656629589930a48ea64ec0f474d445b490e260319a5a194b7f33c848d37363aea67599c0003d00f8b45a85104dc522dcd84c4747a3f5b69b1612271f42393847fe5ac7c413e6a80bb08731a65a28f199cad863143de28cc110995c88bd50bffa549094164e8edcfd29c4c461bc99418f117ef307eeb68519789089a6d4d6731e680638fd9fb31badbdce5ed953634fc7225a835b13b6891b18822868fa86073df6a2db1bbfec3f13595f09deba16b45c0495d67ce00175598bfd6fd25b3971048a543585ee7c93c7c19fca61ea278a5e64d6b3a98b5e03027e4faef5d4c008cba58532741360adf17df204871aa704a09524680bca6b90c5d16c5fbf9b09672437243a7dda6c2f91672adb0f31fc375c52e79052029472b3368485c7cadd3437a0e5333685f98536fa204203a69cb07bc7c4a5d72f8e2117e57310082f887cffeab9e8cdb6fea67fab6a0544fc58c8a9fa2d145c9d865e45a55c5fa3227780cd6f2c8b4af32cef5939bbf29a298cc9182649c2425a9b772e68b6debc39be9fdc0f23e64839281035fc1b26e8480fb7c2f61b6869c18545dcf5d936e82704dda01f5ebb33a9841380dd76c9226386862ec9e327d663b5e9041fe0d301ea5a53c4c39a7db69060911788ba76185af88f773bfa09a19bace388628cd775493dcc3470763561826f3209eab76e282b7ed1dbcb1c6995c6c1c851542b92fd34a7dc229eb04e997466ad96ebcb68fa1e681174ff9527251f8a99c6ab503e6557948401cd433f3c435572fd53991bb099a22e979b2ed70fff2261592b7dd9bba1d188c709a54dcf93ad663979b91c7230b13a2bb60022c91b"
+                    }
+                ],
+                "kernels": [
+                    {
+                        "features": "HeightLocked",
+                        "fee": 8000000,
+                        "lock_height": 128624,
+                        "excess": "000000000000000000000000000000000000000000000000000000000000000000",
+                        "excess_sig": "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+                    }
+                ]
+            }
+        },
+        "amount": 1000000000,
+        "fee": 8000000,
+        "height": 128624,
+        "lock_height": 128624,
+        "participant_data": [
+            {
+                "id": 0,
+                "public_blind_excess": "8faa8c0c18ad1225478e0ea3c152d101e46640d08f8af90b7cebed11dccad79eee0b310ef4e2a0d7a5b5bd05dd5af98a706c82bdc4a30b1ca4ecb13ca44504ca",
+                "public_nonce": "ea297b64e45097e361ec886b771f993318cf89e7d5ed804259eba0b9379026f1c44e9793106fae2e93b92ce192e3600ba950807a12251137336d987a778664e1",
+                "part_sig": null,
+                "message": null,
+                "message_sig": null
+            }
+        ],
+        "version": 1
+    }
+}

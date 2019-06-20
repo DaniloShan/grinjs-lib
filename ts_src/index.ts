@@ -1,3 +1,8 @@
-export { Wallet } from './wallet';
+import * as Mnemonic from './mnemonic';
+import * as Networks from './networks';
+import * as Slate from './slate';
+import { Transaction } from './transaction';
+import { Wallet } from './wallet';
+import * as Global from './global';
 
-export { defaultConfig } from './types';
+export { Mnemonic, Networks, Slate, Transaction, Wallet, Global };

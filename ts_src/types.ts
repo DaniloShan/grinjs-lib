@@ -1,9 +1,10 @@
-const crypto = require('crypto');
-import { ChainTypes } from './global';
-import { fromEntropy, toEntropy } from './mnemonic';
+import { Network } from './networks';
+import {
+    ChainTypes,
+} from './global';
 
 export interface WalletConfig {
-    chainType: ChainTypes | null,
+    chainType: ChainTypes,
     apiListenInterface: string,
     apiListenPort: number,
     ownerApiListenPort: number | null,
@@ -40,55 +41,91 @@ export interface WalletSeedInterface {
     init(password: string, recoveryPhrase: string[] | null): EncryptedWalletSeedInterface;
 }
 
-export class WalletSeed implements WalletSeedInterface {
-    private seed: Buffer;
-    constructor(seedLength: number){
-        this.seed = crypto.randomBytes(seedLength);
-    }
-
-    init(password: string, recoveryPhrase: string[] | null): EncryptedWalletSeedInterface {
-        this.seed = recoveryPhrase && recoveryPhrase.length ? this.fromMnemonic(recoveryPhrase) : this.seed;
-        return EncryptedWalletSeed.from_seed(this.seed, password);
-    }
-
-    fromMnemonic(recoveryPhrase: string[]): Buffer {
-        this.seed = toEntropy(recoveryPhrase);
-        return this.seed;
-    }
-
-    toMnemonic(): string[] {
-        return fromEntropy([...this.seed])
-    }
+export interface WalletInterface {
+    network: Network,
+    walletConfig: WalletConfig | {}
 }
 
 export interface EncryptedWalletSeedInterface {
     encryptedSeed: string,
     salt: string,
-    nonce: string
+    nonce: string,
+    config: WalletConfig,
+    nextChild(index: number): IdInterface;
+    deriveKey(amount: number, id: IdInterface): Buffer;
+    createNonce(commit: Buffer): Buffer;
 }
 
-export class EncryptedWalletSeed implements EncryptedWalletSeedInterface {
-    encryptedSeed: string;
-    salt: string;
-    nonce: string;
+export interface UTXOInterface {
+    height: number,
+    value: number,
+    isCoinbase: boolean,
+    keyId: Buffer,
+    commit: Buffer
+}
 
-    constructor(encryptedSeed: string, salt: string, nonce: string) {
-        this.encryptedSeed = encryptedSeed;
-        this.salt = salt;
-        this.nonce = nonce;
-    }
+export enum UTXOStatus {
+    Unconfirmed = 'Unconfirmed',
+    Unspent = 'Unspent',
+    Locked = 'Locked',
+    Spent = 'Spent',
+}
 
-    public static from_seed(seed: Buffer, password: string = ''): EncryptedWalletSeedInterface {
-        const salt = crypto.randomBytes(8);
-        const nonce = crypto.randomBytes(12);
-        const key = crypto.pbkdf2Sync(password, salt, 100, 32, 'sha512');
-        const encBytes = seed.toString('hex');
-        const cipher = crypto.createCipheriv('chacha20-poly1305', Buffer.from(key, 'hex'), nonce, {
-            authTagLength: 16
-        });
-        const encryptedSeed = cipher.update(Buffer.from(encBytes, 'hex')).toString('hex');
-        cipher.final();
-        const tag = cipher.getAuthTag().toString('hex');
-        return new EncryptedWalletSeed(encryptedSeed + tag, salt.toString('hex'), nonce.toString('hex'))
-    }
+export interface SlateInterface {
+    numParticipants: number,
+    id: string,
+    tx: {
+        offset: string,
+        body: {
+            inputs: {
+                features: string,
+                commit: string
+            }[],
+            outputs: {
+                features: "Plain",
+                commit: string,
+                proof: string
+            }[],
+            kernels: {
+                features: string,
+                fee: number,
+                lockHeight: number,
+                excess: string,
+                excessSig: string
+            }[]
+        }
+    },
+    amount: number,
+    fee: number,
+    height: number,
+    lockHeight: number,
+    participantData: {
+        id: number,
+        publicBlindExcess: string,
+        publicNonce: string,
+        partSig: null,
+        message: null, // TODO: Buffer | null maybe
+        messageSig: null
+    }[],
+    version: number
+}
+
+export interface IdInterface {
+    depth: number;
+    path: {
+        index: number
+    }[]
+}
+
+export interface TXInterface {
+    init(
+        amount: number,
+        height: number,
+        utxoList: UTXOInterface[],
+        wallet: EncryptedWalletSeedInterface,
+        index: number,
+        changeLength: number,
+        minimumConfirmations: number,
+        useAll: boolean
+    ): void;
 }
